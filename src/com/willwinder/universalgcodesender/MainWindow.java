@@ -129,8 +129,8 @@ implements KeyListener, ControllerListener, MainWindowAPI {
         sentRowsLabel = new javax.swing.JLabel();
         rowsLabel = new javax.swing.JLabel();
         machineControlPanel = new javax.swing.JPanel();
-        resetCoordinatesButton = new javax.swing.JButton();
         returnToZeroButton = new javax.swing.JButton();
+        resetCoordinatesButton = new javax.swing.JButton();
         keyboardMovementPanel = new javax.swing.JPanel();
         stepSizeSpinner = new javax.swing.JSpinner();
         arrowMovementEnabled = new javax.swing.JCheckBox();
@@ -151,6 +151,7 @@ implements KeyListener, ControllerListener, MainWindowAPI {
         resetXButton = new javax.swing.JButton();
         resetYButton = new javax.swing.JButton();
         resetZButton = new javax.swing.JButton();
+        returnToWorkZeroButton = new javax.swing.JButton();
         macroPanel = new javax.swing.JPanel();
         customGcodeButton4 = new javax.swing.JButton();
         customGcodeButton3 = new javax.swing.JButton();
@@ -473,19 +474,19 @@ implements KeyListener, ControllerListener, MainWindowAPI {
 
         controlContextTabbedPane.addTab("File Mode", fileModePanel);
 
+        returnToZeroButton.setText("Return to Machine Zero");
+        returnToZeroButton.setEnabled(false);
+        returnToZeroButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnToZeroButtonActionPerformed(evt);
+            }
+        });
+
         resetCoordinatesButton.setText("Reset Zero");
         resetCoordinatesButton.setEnabled(false);
         resetCoordinatesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 resetCoordinatesButtonActionPerformed(evt);
-            }
-        });
-
-        returnToZeroButton.setText("Return to Zero");
-        returnToZeroButton.setEnabled(false);
-        returnToZeroButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                returnToZeroButtonActionPerformed(evt);
             }
         });
 
@@ -559,7 +560,7 @@ implements KeyListener, ControllerListener, MainWindowAPI {
                     .add(yPlusButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 50, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(yMinusButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 50, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(xPlusButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 50, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(xPlusButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 50, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(movementButtonPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, zMinusButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 50, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -681,6 +682,14 @@ implements KeyListener, ControllerListener, MainWindowAPI {
             }
         });
 
+        returnToWorkZeroButton.setText("Return to Work  Zero");
+        returnToWorkZeroButton.setEnabled(false);
+        returnToWorkZeroButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnToWorkZeroButtonActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout machineControlPanelLayout = new org.jdesktop.layout.GroupLayout(machineControlPanel);
         machineControlPanel.setLayout(machineControlPanelLayout);
         machineControlPanelLayout.setHorizontalGroup(
@@ -688,10 +697,7 @@ implements KeyListener, ControllerListener, MainWindowAPI {
             .add(org.jdesktop.layout.GroupLayout.TRAILING, machineControlPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(machineControlPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(machineControlPanelLayout.createSequentialGroup()
-                        .add(softResetMachineControl, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 159, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(resetZButton))
+                    .add(softResetMachineControl, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 159, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(machineControlPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
                         .add(org.jdesktop.layout.GroupLayout.LEADING, machineControlPanelLayout.createSequentialGroup()
                             .add(requestStateInformation, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 49, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -710,7 +716,11 @@ implements KeyListener, ControllerListener, MainWindowAPI {
                     .add(machineControlPanelLayout.createSequentialGroup()
                         .add(returnToZeroButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 159, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(resetYButton)))
+                        .add(resetYButton))
+                    .add(machineControlPanelLayout.createSequentialGroup()
+                        .add(returnToWorkZeroButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 159, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(resetZButton)))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED, 162, Short.MAX_VALUE)
                 .add(keyboardMovementPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -731,8 +741,10 @@ implements KeyListener, ControllerListener, MainWindowAPI {
                     .add(resetYButton))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(machineControlPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(softResetMachineControl)
+                    .add(returnToWorkZeroButton)
                     .add(resetZButton))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(softResetMachineControl)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(machineControlPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(performHomingCycleButton)
@@ -965,7 +977,7 @@ implements KeyListener, ControllerListener, MainWindowAPI {
                 .add(connectionPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(firmwareLabel)
                     .add(firmwareComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         showVerboseOutputCheckBox.setText("Show verbose output");
@@ -1108,7 +1120,7 @@ implements KeyListener, ControllerListener, MainWindowAPI {
                         .add(statusPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                             .add(machinePositionZLabel)
                             .add(machinePositionZValueLabel))))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         settingsMenu.setText("Settings");
@@ -1421,6 +1433,16 @@ implements KeyListener, ControllerListener, MainWindowAPI {
         }
     }
 
+    @Override
+    public void returnToWorkZeroButtonActionPerformed(){
+        try {
+            this.controller.returnToWorkHome();
+            // The return to home command uses G91 to lift the tool.
+            this.G91Mode = true;
+        } catch (Exception ex) {
+            MainWindow.displayErrorDialog(ex.getMessage());
+        }
+    }    
                                                 
 
     @Override
@@ -1500,7 +1522,13 @@ implements KeyListener, ControllerListener, MainWindowAPI {
             // Canceled file open.
         }
     }//GEN-LAST:event_browseButtonActionPerformed
-
+    private void ExternalButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        
+        
+        
+    }
+    
+    
     private void visualizeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizeButtonActionPerformed
         // Create new object if it is null.
         if (this.vw == null) {
@@ -1861,6 +1889,10 @@ implements KeyListener, ControllerListener, MainWindowAPI {
     private void customGcodeText5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customGcodeText5ActionPerformed
         this.settings.setCustomGcode5(this.customGcodeText5.getText());
     }//GEN-LAST:event_customGcodeText5ActionPerformed
+
+    private void returnToWorkZeroButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnToWorkZeroButtonActionPerformed
+        returnToWorkZeroButtonActionPerformed();
+    }//GEN-LAST:event_returnToWorkZeroButtonActionPerformed
 
     private void executeCustomGcode(String str)
     {
@@ -2304,6 +2336,7 @@ implements KeyListener, ControllerListener, MainWindowAPI {
         this.resetYButton.setEnabled(enabled);
         this.resetZButton.setEnabled(enabled);
         this.returnToZeroButton.setEnabled(enabled);
+        this.returnToWorkZeroButton.setEnabled(enabled);
         this.performHomingCycleButton.setEnabled(enabled);
         this.softResetMachineControl.setEnabled(enabled);
         this.killAlarmLock.setEnabled(enabled);
@@ -2837,6 +2870,7 @@ implements KeyListener, ControllerListener, MainWindowAPI {
     private javax.swing.JButton resetXButton;
     private javax.swing.JButton resetYButton;
     private javax.swing.JButton resetZButton;
+    private javax.swing.JButton returnToWorkZeroButton;
     private javax.swing.JButton returnToZeroButton;
     private javax.swing.JLabel rowsLabel;
     private javax.swing.JLabel rowsValueLabel;

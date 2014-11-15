@@ -95,6 +95,11 @@ public abstract class AbstractController implements SerialCommunicatorListener {
     public void returnToHome() throws Exception {
         throw new Exception(Localization.getString("controller.exception.gohome"));
     }
+    
+    public void returnToWorkHome() throws Exception {
+        throw new Exception(Localization.getString("controller.exception.gohome"));
+    }
+    
         
     /**
      * Reset machine coordinates to zero at the current location.

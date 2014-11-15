@@ -19,6 +19,8 @@ public interface MainWindowAPI {
 	public void pauseButtonActionPerformed();
 	
 	public void cancelButtonActionPerformed();
+        
+        public void returnToWorkZeroButtonActionPerformed();
 	
 	public void returnToZeroButtonActionPerformed();
         

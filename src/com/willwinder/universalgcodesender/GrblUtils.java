@@ -60,8 +60,9 @@ public class GrblUtils {
     
     public static final String GCODE_RETURN_TO_ZERO_LOCATION_V8 = "G91 G0 X0 Y0 Z0";
     //public static final String GCODE_RETURN_TO_ZERO_LOCATION_V8C = "G91 G28 X0 Y0 Z4.0";
-    public static final String GCODE_RETURN_TO_ZERO_LOCATION_V8C = "G90 G28 X0 Y0";
-    public static final String GCODE_RETURN_TO_MAX_Z_LOCATION_V8C = "G90 G0 Z";
+    public static final String GCODE_RETURN_TO_ZERO_LOCATION_V8C = "G53 G0 X0 Y0";
+    public static final String GCODE_RETURN_TO_ZERO_WORK_LOCATION_V8C = "G90 G0 X0 Y0 Z0";
+    public static final String GCODE_RETURN_TO_MAX_Z_LOCATION_V8C = "G53 G0 Z0";
     
     public static final String GCODE_PERFORM_HOMING_CYCLE_V8 = "G28 X0 Y0 Z0";
     public static final String GCODE_PERFORM_HOMING_CYCLE_V8C = "$H";
@@ -177,11 +178,26 @@ public class GrblUtils {
         }
     }
     
+    static protected ArrayList<String> getReturnToWorkHomeCommands(final double version, final String letter, final double maxZOffset) {
+        ArrayList<String> commands = new ArrayList<String>();    
+        if ((version >= 0.8 && (letter != null) && letter.equals("c"))
+                || version >= 0.9) {
+            commands.add(GrblUtils.GCODE_RETURN_TO_MAX_Z_LOCATION_V8C); // DOC XXX This needs work
+            commands.add(GrblUtils.GCODE_RETURN_TO_ZERO_WORK_LOCATION_V8C);
+        }
+        else if (version >= 0.8) {
+            commands.add(GrblUtils.GCODE_RETURN_TO_ZERO_LOCATION_V8);
+        }
+        
+        return commands;
+    }
+    
+    
     static protected ArrayList<String> getReturnToHomeCommands(final double version, final String letter, final double maxZOffset) {
         ArrayList<String> commands = new ArrayList<String>();    
         if ((version >= 0.8 && (letter != null) && letter.equals("c"))
                 || version >= 0.9) {
-            commands.add(GrblUtils.GCODE_RETURN_TO_MAX_Z_LOCATION_V8C + maxZOffset);
+            commands.add(GrblUtils.GCODE_RETURN_TO_MAX_Z_LOCATION_V8C);
             commands.add(GrblUtils.GCODE_RETURN_TO_ZERO_LOCATION_V8C);
         }
         else if (version >= 0.8) {
